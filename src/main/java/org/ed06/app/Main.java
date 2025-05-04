@@ -7,9 +7,14 @@ import org.ed06.model.Hotel;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+/**
+ * Aplicacion
+ */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-    // Definimos constantes para las diferentes opciones del menú
+/**
+ * Opciones de el menu
+ */
     private static final int REGISTRAR_HABITACION = 1;
     private static final int LISTAR_HABITACIONES_DISPONIBLES = 2;
     private static final int RESERVAR_HABITACION = 11;
@@ -17,7 +22,15 @@ public class Main {
     private static final int LISTAR_CLIENTES = 21;
     private static final int REGISTRAR_CLIENTE = 22;
     private static final int SALIR = 0;
-
+    /**
+     * Constructor por defecto de la clase Main.
+     * No realiza ninguna acción.
+     */
+    public Main(){}
+    /**
+     * Menu de la aplicacion
+     * @param args Argumentos
+     */
     public static void main(String[] args) {
         // Variales locales
         String tipo;
@@ -72,7 +85,7 @@ public class Main {
                     break;
             }
         }
-    }
+ }
 
     /**
      *reserva una habitacion
@@ -101,9 +114,9 @@ public class Main {
 
     /**
      * pide al usuario una fecha
-     * @param x Cadena que sale en el primer mensaje
-     * @param x1 Cadena que sale en el segundo mensaje
-     * @param x2 Cadena que sale en el tercer mensaje
+     * @param x texto para el anio
+     * @param x1 texto para el mes
+     * @param x2 texto para el dia
      * @return Fecha introducida por el usuario
      */
     private static LocalDate getFecha(String x, String x1, String x2) {
