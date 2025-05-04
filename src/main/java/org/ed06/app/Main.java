@@ -32,9 +32,6 @@ public class Main {
      * @param args Argumentos
      */
     public static void main(String[] args) {
-        // Variales locales
-        String tipo;
-
         // Creamos un menú para el administrador con las diferentes opciones proporcionadas
         Hotel hotel = new Hotel("El mirador", "Calle Entornos de Desarrollo 6", "123456789");
 
