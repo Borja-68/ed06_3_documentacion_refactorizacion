@@ -5,7 +5,9 @@ public class Habitacion {
     private String tipo; // "SIMPLE", "DOBLE", "SUITE"
     private double precioBase;
 
-    //Todo pendiente cambiar la forma de gestionar la disponibilidad en base a las fechas de las reservas
+    /**Todo pendiente cambiar la forma de gestionar la
+     * disponibilidad en base a las fechas de las reservas
+     */
     private boolean disponible;
 
     public Habitacion(int numero, String tipo, double precioBase) {
@@ -31,7 +33,11 @@ public class Habitacion {
         return disponible;
     }
 
-    // Método que usa un switch para determinar el número máximo de huéspedes
+    /**
+     * Obtiene el numero de huespedes máximos
+     *
+     * @return Un numero dependiendo del tipo de Huespedes maximos
+     */
     public double obtenerNumMaxHuespedes() {
         return switch (tipo) {
             case "SIMPLE" -> 1;
@@ -42,6 +48,9 @@ public class Habitacion {
         };
     }
 
+    /**
+     * Reserva una habitacion que este disponible
+     */
     public void reservar() {
         if (disponible) {
             System.out.println("Habitación #" + numero + " ya reservada");
