@@ -1,9 +1,6 @@
 package org.ed06.model;
 
 public class Cliente {
-    /**
-     * Datos de el cliente
-     */
     public int id;
     public String nombre;
     public String dni;
