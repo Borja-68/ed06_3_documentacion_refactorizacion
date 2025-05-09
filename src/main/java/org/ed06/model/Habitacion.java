@@ -1,60 +1,64 @@
 package org.ed06.model;
 
 public class Habitacion {
-    private int numero;
-    private String tipo; // "SIMPLE", "DOBLE", "SUITE"
-    private double precioBase;
+    public static final int habitacionSimple = 1;
+    public static final int habitacionDoble = 3;
+    public static final int habitacionSuite = 4;
+    public static final int habitacionLiteras = 8;
+    public static final int habitacionBase = 1;
+    private int numeroHabitacion;
+    private String tipoHabitacion; // "SIMPLE", "DOBLE", "SUITE"
+    private double precioBaseHabitacion;
 
     /**Todo pendiente cambiar la forma de gestionar la
      * disponibilidad en base a las fechas de las reservas
      */
-    private boolean disponible;
+    private boolean habitacionDisponible;
 
-    public Habitacion(int numero, String tipo, double precioBase) {
-        this.numero = numero;
-        this.tipo = tipo;
-        this.precioBase = precioBase;
-        this.disponible = true;
+    public Habitacion(int numeroHabitacion, String tipoHabitacion, double precioBaseHabitacion) {
+        this.numeroHabitacion = numeroHabitacion;
+        this.tipoHabitacion = tipoHabitacion;
+        this.precioBaseHabitacion = precioBaseHabitacion;
+        this.habitacionDisponible = true;
     }
 
-    public int getNumero() {
-        return numero;
+    public int getNumeroHabitacion() {
+        return numeroHabitacion;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getTipoHabitacion() {
+        return tipoHabitacion;
     }
 
-    public double getPrecioBase() {
-        return precioBase;
+    public double getPrecioBaseHabitacion() {
+        return precioBaseHabitacion;
     }
 
-    public boolean isDisponible() {
-        return disponible;
+    public boolean isHabitacionDisponible() {
+        return habitacionDisponible;
     }
 
     /**
      * Obtiene el numero de huespedes máximos
+     * depepensiendo del tipo de habitacion
      *
      * @return Un numero dependiendo del tipo de Huespedes maximos
      */
     public double obtenerNumMaxHuespedes() {
-        return switch (tipo) {
-            case "SIMPLE" -> 1;
-            case "DOBLE" -> 3;
-            case "SUITE" -> 4;
-            case "LITERAS" -> 8;
-            default -> 1;
+        return switch (tipoHabitacion) {
+            case "SIMPLE" -> habitacionSimple;
+            case "DOBLE" -> habitacionDoble;
+            case "SUITE" -> habitacionSuite;
+            case "LITERAS" -> habitacionLiteras;
+            default -> habitacionBase;
         };
     }
 
-    /**
-     * Reserva una habitacion que este disponible
-     */
-    public void reservar() {
-        if (disponible) {
-            System.out.println("Habitación #" + numero + " ya reservada");
+
+    public void reservarHabitacionDisponible() {
+        if (habitacionDisponible) {
+            System.out.println("Habitación #" + numeroHabitacion + " ya reservada");
         }
-        disponible = true;
+        habitacionDisponible = true;
     }
 }

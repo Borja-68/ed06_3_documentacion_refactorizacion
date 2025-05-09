@@ -32,25 +32,10 @@ public class Main {
      * @param args Argumentos
      */
     public static void main(String[] args) {
-        // Creamos un menú para el administrador con las diferentes opciones proporcionadas
-        Hotel hotel = new Hotel("El mirador", "Calle Entornos de Desarrollo 6", "123456789");
+        Hotel hotel = iniciaHotel();
 
-        // Registramos algunas habitaciones
-        hotel.registrarHabitacion("SIMPLE", 50);
-        hotel.registrarHabitacion("DOBLE", 80);
-        hotel.registrarHabitacion("SUITE", 120);
-        hotel.registrarHabitacion("LITERAS", 200);
-        hotel.registrarHabitacion("SIMPLE", 65);
-        hotel.registrarHabitacion("DOBLE", 100);
-        hotel.registrarHabitacion("SUITE", 150);
-        hotel.registrarHabitacion("LITERAS", 250);
-
-        // Registramos algunos clientes
-        hotel.registrarCliente("Daniel", "daniel@daniel.com", "12345678A", true);
-        hotel.registrarCliente("Adrián", "adrian@adrian.es", "87654321B", false);
-
-        // Mostramos el menú
         while (true) {
+            // Mostramos el menú
             mostrarMenu();
             int opcion = scanner.nextInt();
             scanner.nextLine();
@@ -59,16 +44,16 @@ public class Main {
                     registrarHabitacion(hotel);
                     break;
                 case LISTAR_HABITACIONES_DISPONIBLES:
-                    hotel.listarHabitacionesDisponibles();
+                    hotel.mostrarHabitacionesDisponibles();
                     break;
                 case RESERVAR_HABITACION:
                     reservaHabitacion(hotel);
                     break;
                 case LISTAR_RESERVAS:
-                    hotel.listarReservas();
+                    hotel.mostrarReservas();
                     break;
                 case LISTAR_CLIENTES:
-                    hotel.listarClientes();
+                    hotel.mostrarClientes();
                     break;
                 case REGISTRAR_CLIENTE:
                     registrarCliente(hotel);
@@ -85,6 +70,33 @@ public class Main {
  }
 
     /**
+     * inicia un hotel
+     * y crea unos clientes y habitaciones
+     *
+     * @return el hotel creado con unas habitaciones y clientes
+     */
+
+    private static Hotel iniciaHotel() {
+        // Creamos un menú para el administrador con las diferentes opciones proporcionadas
+        Hotel hotel = new Hotel("El mirador", "Calle Entornos de Desarrollo 6", "123456789");
+
+        // Registramos algunas habitaciones
+        hotel.registrarHabitacion("SIMPLE", 50);
+        hotel.registrarHabitacion("DOBLE", 80);
+        hotel.registrarHabitacion("SUITE", 120);
+        hotel.registrarHabitacion("LITERAS", 200);
+        hotel.registrarHabitacion("SIMPLE", 65);
+        hotel.registrarHabitacion("DOBLE", 100);
+        hotel.registrarHabitacion("SUITE", 150);
+        hotel.registrarHabitacion("LITERAS", 250);
+
+        // Registramos algunos clientes
+        hotel.registrarCliente("Daniel", "daniel@daniel.com", "12345678A", true);
+        hotel.registrarCliente("Adrián", "adrian@adrian.es", "87654321B", false);
+        return hotel;
+    }
+
+    /**
      *reserva una habitacion
      * pidiendo la id del cliente
      * su tipo de habitacion
@@ -93,30 +105,31 @@ public class Main {
      * @param hotel Hotel donde se reserva
      */
     private static void reservaHabitacion(Hotel hotel) {
-        String tipo;
+        String tipoHabitacion;
         System.out.println("Introduce el id del cliente: ");
         int clienteId = scanner.nextInt();
-        tipo =tipoHabitacion();
-        LocalDate fechaEntrada = getFecha("Introduce la fecha de entrada (año): ", "Introduce la fecha de entrada (mes): ", "Introduce la fecha de entrada (día): ");
-        LocalDate fechaSalida = getFecha("Introduce la fecha de salida (año): ", "Introduce la fecha de salida (mes): ", "Introduce la fecha de salida (día): ");
-        int numeroHabitacion = hotel.reservarHabitacion(clienteId, tipo, fechaEntrada,
+        tipoHabitacion = pedirTipoHabitacion();
+        LocalDate fechaEntrada = pedirFecha("Introduce la fecha de entrada (año): ", "Introduce la fecha de entrada (mes): ", "Introduce la fecha de entrada (día): ");
+        LocalDate fechaSalida = pedirFecha("Introduce la fecha de salida (año): ", "Introduce la fecha de salida (mes): ", "Introduce la fecha de salida (día): ");
+        int numeroHabitacion = hotel.reservarHabitacion(clienteId, tipoHabitacion, fechaEntrada,
             fechaSalida);
         System.out.println("Datos de la habitacion");
         Habitacion habitacion = hotel.getHabitacion(numeroHabitacion);
         System.out.println(
-            "Habitación #" + habitacion.getNumero() + " - Tipo: " + habitacion.getTipo()
-                + " - Precio base: " + habitacion.getPrecioBase());
+            "Habitación #" + habitacion.getNumeroHabitacion() + " - Tipo: " + habitacion.getTipoHabitacion()
+                + " - Precio base: " + habitacion.getPrecioBaseHabitacion());
         System.out.println("Número de habitación reservada: " + numeroHabitacion);
     }
 
     /**
      * pide al usuario una fecha
+     *
      * @param x texto para el anio
      * @param x1 texto para el mes
      * @param x2 texto para el dia
      * @return Fecha introducida por el usuario
      */
-    private static LocalDate getFecha(String x, String x1, String x2) {
+    private static LocalDate pedirFecha(String x, String x1, String x2) {
         System.out.println(x);
         int anioEntrada = scanner.nextInt();
         scanner.nextLine();
@@ -136,13 +149,13 @@ public class Main {
      * @param hotel Hotel en el que se registra la habitacion
      */
     private static void registrarHabitacion(Hotel hotel) {
-        String tipo;
-        tipo = tipoHabitacion();
+        String tipoHabitacion;
+        tipoHabitacion = pedirTipoHabitacion();
         System.out.println("Introduce el precio base de la habitación: ");
         double precioBase = scanner.nextDouble();
         scanner.nextLine();
-        hotel.registrarHabitacion(tipo, precioBase);
-        System.out.println("Habitación registrada: " + tipo + " - Precio base: " + precioBase);
+        hotel.registrarHabitacion(tipoHabitacion, precioBase);
+        System.out.println("Habitación registrada: " + tipoHabitacion + " - Precio base: " + precioBase);
     }
 
     /**
@@ -150,7 +163,7 @@ public class Main {
      *
      * @return Devuelve el tipo introducido
      */
-    private static String tipoHabitacion() {
+    private static String pedirTipoHabitacion() {
         String tipo;
         System.out.println("Introduce el tipo de habitación (SIMPLE, DOBLE, SUITE): ");
         tipo = scanner.nextLine();
@@ -163,76 +176,79 @@ public class Main {
      * @param hotel Hotel en el que se realiza el registro
      */
     private static void registrarCliente(Hotel hotel) {
-        String nombre;
-        String email;
-        String dni;
+        String nombreCliente;
+        String emailCliente;
+        String dniCliente;
 
-        nombre = nombreCliente();
-        email = emailCliente();
-        dni = dniCliente();
+        nombreCliente = pedirNombreCliente();
+        emailCliente = pedirEmailCliente();
+        dniCliente = pedirDniCliente();
         System.out.println("¿Es VIP? (true/false): ");
         boolean esVip = scanner.nextBoolean();
-        hotel.registrarCliente(nombre, email, dni, esVip);
+        hotel.registrarCliente(nombreCliente, emailCliente, dniCliente, esVip);
     }
 
     /**
      * Pide el dni del usuario
+     * no dejando salir hasta que se introduzca uno valido 
      *
      * @return Un dni valido
      */
-    private static String dniCliente() {
-        String dni;
+    private static String pedirDniCliente() {
+        String dniCliente;
         while (true) {
             try {
                 System.out.println("Introduce el DNI del cliente: ");
-                dni = scanner.next();
-                Cliente.validarDni(dni);
+                dniCliente = scanner.next();
+                Cliente.validarDni(dniCliente);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println("DNI no válido. Inténtalo de nuevo.");
             }
         }
-        return dni;
+        return dniCliente;
     }
 
     /**
      * Pide el email del usuario
-     *
+     * no dejando salir hasta que se introduzca uno valido 
+     * 
      * @return Un email valido
      */
-    private static String emailCliente() {
-        String email;
+    private static String pedirEmailCliente() {
+        String emailCliente;
         while (true) {
             try {
-                System.out.println("Introduce el email del cliente: ");
-                email = scanner.next();
-                Cliente.validarEmail(email);
+                System.out.println("Introduce el emailCliente del cliente: ");
+                emailCliente = scanner.next();
+                Cliente.validarEmail(emailCliente);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println("Email no válido. Inténtalo de nuevo.");
             }
         }
-        return email;
+        return emailCliente;
     }
 
     /**
      * Pide el nombre del usuario
-     *
+     * no dejando salir hasta que se introduzca uno valido 
+     * 
      * @return Un nombre valido
      */
-    private static String nombreCliente() {
-        String nombre;
+    private static String pedirNombreCliente() {
+        String nombreCliente;
         while(true) {
             try {
-                System.out.println("Introduce el nombre del cliente: ");
-                nombre = scanner.next();
-                Cliente.validarNombre(nombre);
+                System.out.println("Introduce el nombreCliente del cliente: ");
+                nombreCliente = scanner.next();
+                Cliente.validarNombre(nombreCliente);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println("Nombre no válido. Inténtalo de nuevo.");
             }
         }
-        return nombre;
+        return nombreCliente;
     }
 
     private static void mostrarMenu() {
