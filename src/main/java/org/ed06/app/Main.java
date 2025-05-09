@@ -28,7 +28,7 @@ public class Main {
      */
     public Main(){}
     /**
-     * Menu de la aplicacion
+     * Menu de la aplicaci
      * @param args Argumentos
      */
     public static void main(String[] args) {
