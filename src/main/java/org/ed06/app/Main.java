@@ -7,14 +7,10 @@ import org.ed06.model.Hotel;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-/**
- * Aplicacion
- */
+
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-/**
- * Opciones de el menu
- */
+
     private static final int REGISTRAR_HABITACION = 1;
     private static final int LISTAR_HABITACIONES_DISPONIBLES = 2;
     private static final int RESERVAR_HABITACION = 11;
